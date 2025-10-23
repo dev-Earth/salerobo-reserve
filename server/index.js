@@ -3,7 +3,6 @@ import cors from 'cors';
 import { createClient } from 'redis';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { error } from 'console';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -55,7 +54,6 @@ console.log('KEAを有効化しました');
 // WebSocket
 // io.on('connection', (socket) => {
 //   console.log('クライアントが接続しました:', socket.id);
-  
 //   socket.on('disconnect', () => {
 //     console.log('クライアントが切断しました:', socket.id);
 //   });
@@ -68,20 +66,16 @@ await subscriberClient.pSubscribe('__keyspace@0__:*', async (message, channel) =
   const key = channel.replace('__keyspace@0__:', '');
   
   if (message === 'set' || message === 'hset') {
-    // console.log(`新しいデータが追加/更新されました: ${key}`);
-    
     try {
       const data = await redisClient.get(key);
       if (data) {
         const order = JSON.parse(data);
-        // console.log('取得したデータ:', order);
         
         io.emit('orderUpdated', {
           action: 'update',
           key: key,
           data: order
         });
-        // console.log('クライアントに通知しました');
       }
     } catch (err) {
       console.error('データ取得エラー:', err);
@@ -93,7 +87,6 @@ await subscriberClient.pSubscribe('__keyspace@0__:*', async (message, channel) =
       action: 'delete',
       key: key
     });
-    // console.log('削除をクライアントに通知しました');
   }
 });
 
@@ -173,16 +166,12 @@ app.post('/api/register', async (req, res) => {
     const allKeys = await redisClient.keys('*');
     let maxNumber = 0;
     
-    // console.log(`全キー:`, allKeys);
-    // console.log(`検索対象タイプ: ${type}`);
-    
     const regex = new RegExp(`^${type}(\\d{4})$`);
     
     for (const key of allKeys) {
       const match = key.match(regex);
       if (match) {
         const num = parseInt(match[1], 10);
-        // console.log(`マッチしたキー: ${key}, 抽出番号: ${num}`);
         if (!isNaN(num) && num > maxNumber) {
           maxNumber = num;
         }
@@ -192,8 +181,6 @@ app.post('/api/register', async (req, res) => {
     const newNumber = maxNumber + 1;
     const paddedNumber = String(newNumber).padStart(4, '0');
     const created = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
-    
-    // console.log(`最大番号: ${maxNumber}, 新しい番号: ${newNumber}, ゼロ埋め: ${paddedNumber}`);
     
     const order = {
       number: paddedNumber,
@@ -205,7 +192,6 @@ app.post('/api/register', async (req, res) => {
 
     const redisKey = `${type}${paddedNumber}`;
     await redisClient.set(redisKey, JSON.stringify(order));
-    // console.log(`Redisに保存: ${redisKey}`);
     res.json({ success: true, order, key: redisKey });
   } catch (error) {
     console.error('登録エラー:', error);
@@ -288,12 +274,11 @@ app.get('/api/hello', (req, res) => {
 });
 
 // React SPA 対応(ルートは常に index.html に返す)
-app.get('*', (req, res) => {
+// NOTE: path-to-regexp v6 以降では '*' は無効。代わりに '/(.*)' を使用。
+app.get('/(.*)', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 httpServer.listen(PORT, '0.0.0.0', () => {
-  // console.log(`${PORT}で起動しました`);
   console.log(`websocket OK`);
-  console.error(error);
 });

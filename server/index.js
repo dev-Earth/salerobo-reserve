@@ -51,14 +51,6 @@ await subscriberClient.connect();
 await redisClient.configSet('notify-keyspace-events', 'KEA');
 console.log('KEAを有効化しました');
 
-// WebSocket
-// io.on('connection', (socket) => {
-//   console.log('クライアントが接続しました:', socket.id);
-//   socket.on('disconnect', () => {
-//     console.log('クライアントが切断しました:', socket.id);
-//   });
-// });
-
 // キー監視
 await subscriberClient.pSubscribe('__keyspace@0__:*', async (message, channel) => {
   console.log(`Redis通知: チャンネル=${channel}, メッセージ=${message}`);
@@ -274,10 +266,15 @@ app.get('/api/hello', (req, res) => {
 });
 
 // React SPA 対応(ルートは常に index.html に返す)
-// NOTE: path-to-regexp v6 以降では '*' は無効。代わりに '/(.*)' を使用。
-app.get('/(.*)', (req, res) => {
+// 1) すべてを SPA にフォールバックする場合
+app.get('/:path*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
+
+// 2) もし /api を除外したい場合は上の代わりにこちらを使ってください
+// app.get(/^\/(?!api).*/, (req, res) => {
+//   res.sendFile(path.join(__dirname, '../dist/index.html'));
+// });
 
 httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`websocket OK`);

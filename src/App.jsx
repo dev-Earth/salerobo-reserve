@@ -3,7 +3,7 @@ import Home from './pages/Home'
 import Reserve from './pages/Reserve'
 import Notfound from './pages/Notfound'
 import Regi from './pages/Regi'
-import Manag from './pages/manag'
+import Manag from './pages/Manag'
 
 function App() {
     return (

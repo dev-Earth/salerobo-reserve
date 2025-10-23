@@ -1,0 +1,66 @@
+.rs-content {
+    text-align: center;
+  background: url('/roboA.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
+
+.rs-status {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  background: #fffffff2;
+  width: 320px;
+  height: fit-content;
+  align-content: center;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.rs-true {
+  & p {
+    font-size: 20px;
+    color: #17e232;
+    font-weight: bold;
+  }
+  & span {
+    font-size: 16px;
+  }
+}
+
+.rs-true-p {
+  margin: 10px 0;
+}
+
+.rs-number span{
+  font-size: 40px;
+}
+
+.rs-false {
+    & p {
+    font-size: 20px;
+    color: #000000;
+  }
+  & span {
+    font-size: 12px;
+  }
+}
+
+.rs-finished {
+  padding: 20px 0;
+  & p:first-child {
+    font-size: 25px;
+    color: #13c92c;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  & p:nth-child(2), p:nth-child(3) {
+    font-size: 16px;
+  }
+}

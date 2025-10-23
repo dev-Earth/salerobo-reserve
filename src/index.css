@@ -1,0 +1,53 @@
+:root {
+  --dark-bgc-primary: #fff;
+  --dark-bgc-secondary: #fff;
+  --dark-text-c-primary: #fff;
+  --dark-text-c-secondary: #fff;
+
+  --dark-accent: ;
+
+  --right-bgc-primary: #ffffff;
+  --right-bgc-secondary: #fff;
+  --right-text-c-primary: #000000;
+  --right-text-c-secondary: #131313;
+
+  --right-accent: #2146ff;
+
+  --custom-clr-1: #ffffff70;
+  --custom-clr-2: #5bd3ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.nt-cont {
+
+  & div {
+    background: url(https://digital-marketing.jp/wp-content/uploads/2016/11/19_what-is-a-404-error.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nt-cont {
+    background: #edc414;
+    height: 100vh;
+
+    & div {
+      background: url(https://digital-marketing.jp/wp-content/uploads/2016/11/19_what-is-a-404-error.png);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100vw;
+      height: 400px;
+    }
+  }
+}

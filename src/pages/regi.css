@@ -1,0 +1,75 @@
+.regi-content {
+  text-align: center;
+  background: url('/roboB-part1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
+
+.regi-list {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  background: #ffffffd6;
+  width: 350px;
+  height: fit-content;
+  align-content: center;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 20px;
+
+  & input {
+    border: none;
+  }
+}
+
+.regi-cinput {
+    background: var(--right-bgc-primary);
+    color: #000;
+    border: 1px solid #000;
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    margin: 10px auto;
+    font-size: 16px;
+    width: 100%;
+    height: 45px;
+    &:active {
+      border: none;
+    }
+}
+
+.regi-cinput-btn {
+  background: var(--custom-clr-2);
+  color: var(--right-text-c-primary);
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  margin: 0 auto;
+  height: 45px;
+  align-content: center;
+  font-size: 20px;
+    &:active {
+
+  }
+}
+
+.regi-type-radio {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.regi-type-radio label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  & span {
+    margin-top: 5px;
+  }
+}

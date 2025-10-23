@@ -46,7 +46,6 @@ subscriberClient.on('error', (err) => {
 });
 
 await subscriberClient.connect();
-// console.log('Subscriber Redisに接続しました');
 
 await redisClient.configSet('notify-keyspace-events', 'KEA');
 console.log('KEAを有効化しました');
@@ -265,16 +264,13 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from Express' });
 });
 
-// React SPA 対応(ルートは常に index.html に返す)
-// 1) すべてを SPA にフォールバックする場合
-app.get('/:path*', (req, res) => {
+// React SPA フォールバック（path-to-regexp を通さないミドルウェア方式）
+app.use((req, res, next) => {
+  if (req.method !== 'GET') return next();
+  if (req.path.startsWith('/api')) return next();
+  if (req.path.startsWith('/socket.io')) return next(); // socket.io を除外
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
-
-// 2) もし /api を除外したい場合は上の代わりにこちらを使ってください
-// app.get(/^\/(?!api).*/, (req, res) => {
-//   res.sendFile(path.join(__dirname, '../dist/index.html'));
-// });
 
 httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`websocket OK`);
